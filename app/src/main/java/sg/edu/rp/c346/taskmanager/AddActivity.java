@@ -1,5 +1,6 @@
 package sg.edu.rp.c346.taskmanager;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,10 +24,11 @@ public class AddActivity extends AppCompatActivity {
         btnAddTask = (Button)findViewById(R.id.btnAddTask);
         btnCancel = (Button)findViewById(R.id.btnCancel);
 
+        Intent i = getIntent();
+
         btnAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DBHelper db = new DBHelper(AddActivity.this);
 
                 String nameStr = etName.getText().toString();
                 String descStr = etDesc.getText().toString();
@@ -48,6 +50,7 @@ public class AddActivity extends AppCompatActivity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setResult(RESULT_OK);
                 finish();
             }
         });
