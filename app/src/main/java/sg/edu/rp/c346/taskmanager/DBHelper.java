@@ -41,7 +41,7 @@ class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void insertTask(String name, String description) {
+    public long insertTask(String name, String description) {
 
         // Get an instance of the database for writing
         SQLiteDatabase db = this.getWritableDatabase();
@@ -53,9 +53,11 @@ class DBHelper extends SQLiteOpenHelper {
         // Store the column name as key and the date as value
         values.put(COLUMN_DESCRIPTION, description);
         // Insert the row into the TABLE_TASK
-        db.insert(TABLE_TASK, null, values);
+        long result = db.insert(TABLE_TASK, null, values);
         // Close the database connection
         db.close();
+
+        return result;
     }
 
 

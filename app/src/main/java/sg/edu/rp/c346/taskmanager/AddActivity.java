@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class AddActivity extends AppCompatActivity {
 
     EditText etName, etDesc;
     Button btnAddTask, btnCancel;
+    int reqCode = 123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +31,17 @@ public class AddActivity extends AppCompatActivity {
                 String nameStr = etName.getText().toString();
                 String descStr = etDesc.getText().toString();
 
-                db.insertTask(nameStr, descStr);
-                db.close();
+                DBHelper dbh = new DBHelper(AddActivity.this);
+                long row_affected = dbh.insertTask(nameStr,descStr);
+                dbh.close();
+
+                if (row_affected != -1){
+                    Toast.makeText(AddActivity.this, "Insert successful",
+                            Toast.LENGTH_SHORT).show();
+                }
+                finish();
+                setResult(RESULT_OK);
+
             }
         });
 

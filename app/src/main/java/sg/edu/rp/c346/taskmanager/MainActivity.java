@@ -14,26 +14,25 @@ public class MainActivity extends AppCompatActivity {
 
     Button btnAddTask;
     ListView lvTask;
-    ArrayAdapter<String> Adapter;
+    ArrayAdapter aa;
+    ArrayList<String> al;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        DBHelper db = new DBHelper(this);
-        db.getWritableDatabase();
-        ArrayList<String> data = db.getTaskContent();
-        db.close();
-
-        String txt = "";
-        for (int i = 0; i < data.size(); i++) {
-            txt += data.get(i) + "\n\n";
-        }
-        lvTask.(txt);
-
         btnAddTask = (Button)findViewById(R.id.btnAddTask);
         lvTask = (ListView)findViewById(R.id.lvTask);
+
+        al = new ArrayList<String>();
+        aa = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, al);
+        lvTask.setAdapter(aa);
+
+        DBHelper db = new DBHelper(MainActivity.this);
+        al.clear();
+        al.addAll(db.getTaskContent());
+        db.close();
 
         btnAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
